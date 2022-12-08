@@ -6,7 +6,7 @@ import timeago as timesince
 import traceback
 
 def date(target, clock: bool = True, seconds: bool = False, ago: bool = False, only_ago: bool = False, raw: bool = False):
-    if isinstance(target, int) or isinstance(target, float):
+    if isinstance(target, (int, float)):
         target = datetime.datetime.utcfromtimestamp(target)
 
     if target is None:
@@ -20,7 +20,7 @@ def date(target, clock: bool = True, seconds: bool = False, ago: bool = False, o
         else:
             timestamp = target.strftime("%d %B %Y")
 
-        if isinstance(target, int) or isinstance(target, float):
+        if isinstance(target, (int, float)):
             target = datetime.datetime.utcfromtimestamp(target)
             target = calendar.timegm(target.timetuple())
 

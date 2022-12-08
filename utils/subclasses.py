@@ -34,4 +34,4 @@ class Context(commands.Context):
 
     @property
     def db(self) -> Union[Pool, Connection]:
-        return self._db if self._db else self.pool
+    	return self._db or self.pool

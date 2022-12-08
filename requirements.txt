@@ -1,7 +1,11 @@
 git+https://github.com/Rapptz/discord.py
 git+https://github.com/SawshaDev/osu.py
 git+https://github.com/Gorialis/jishaku@master
-asyncpg
-timeago
-python-socketio
-typing_extensions
+aiohttp==3.8.1
+asyncpg==0.27.0
+config==0.5.1
+discord.py==2.1.0
+gevent_socketio==0.3.6
+setuptools==65.5.1
+timeago==1.0.16
+typing_extensions==4.4.0
