@@ -23,6 +23,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 intents.typing = False
+intents.presences = True
 
 
 class Aswo(commands.Bot):
@@ -42,19 +43,29 @@ class Aswo(commands.Bot):
         self.start_time = discord.utils.utcnow()
         self.logger = logging.getLogger(__name__)
         self.replay_key = replay_key
+
+        self._default_prefixes = (">>",)
+
+
         os.environ["JISHAKU_NO_UNDERSCORE"] = "True"
         os.environ["JISHAKU_NO_DM_TRACEBACK"] = "True"
         
-        super().__init__(command_prefix=self.get_prefix,intents=intents, activity=discord.Activity(type=discord.ActivityType.playing, name="Click on the circles!"))
+        super().__init__(command_prefix=self.get_pre,intents=intents, activity=discord.Activity(type=discord.ActivityType.playing, name="Click on the circles!"), owner_ids = [894794517079793704, 739219467455823921])
 
 
 
+    async def get_pre(self, bot, message: discord.Message):
+        if not message:
+            return commands.when_mentioned_or(*self._default_prefixes)(bot, message)
+        if not message.guild:
+            return commands.when_mentioned_or(*self._default_prefixes)(bot, message)
 
-    async def get_prefix(bot: Aswo, message: discord.Message):
         try:
-            return commands.when_mentioned_or(">>", bot.prefixes[message.guild.id])(bot, message)
+            prefix = (*self._default_prefixes, self.prefixes[message.guild.id], )
         except KeyError:
-            return commands.when_mentioned_or(">>")(bot, message)
+            prefix = self._default_prefixes
+
+        return commands.when_mentioned_or(*prefix)(bot, message)
 
     async def setup_hook(self): 
         query = await self.pool.fetch("SELECT * FROM prefix")

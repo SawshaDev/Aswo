@@ -1,4 +1,9 @@
+#My D
 FROM python:3.10-alpine
+
+RUN apk add --no-cache linux-headers && apk --no-cache add gcc musl-dev && apk add libc-dev && apk add libffi-dev 
+ 
+RUN apk update && apk add cmake 
 
 COPY requirements.txt requirements.txt
 

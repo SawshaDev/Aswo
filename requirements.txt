@@ -5,3 +5,4 @@ asyncpg
 timeago
 python-socketio
 typing_extensions
+psutil
